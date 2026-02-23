@@ -21,7 +21,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -39,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -47,17 +51,69 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.overlayproject.BottomNavItem
 import com.example.overlayproject.R
+import com.example.overlayproject.data
 import com.example.overlayproject.ui.theme.mybackground_color
 
 
 
+sealed class BottomNavItem(
+    val route: String,
+    val icon: ImageVector,
+    val label: String) {
+    object Home: BottomNavItem("home", Icons.Default.Home, "Home")
+    object Scan: BottomNavItem("scan", Icons.Default.Menu, "Scam")
+    object Cart: BottomNavItem("cart", Icons.Default.ShoppingCart, "Cart")
+
+}
 
 object CardDimensions {
     val Height = 500.dp
     val ImageHeight = 350.dp
-    val Width = 120.dp
+    val Width = 120.dp}
+
+
+
+
+
+
+@Composable
+fun MainUI(modifier: Modifier= Modifier ) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(start = 10.dp, end = 10.dp)) {
+        // first Quarter Row
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                //ROW1
+                // containing the Cart icon
+                TopRow_1(modifier = Modifier, "Churchil")
+
+                //Row2
+                // containiing the Search Bar and the Scam Button
+                TopRow_2(modifier = Modifier)
+
+                //Row 3
+                TopRow_3(modifier = Modifier)
+                //ROW 4
+                //contains the horizontal list containing the tags
+                TopRow_4(modifier = Modifier)
+
+            }
+        }
+
+        //second 2-Quarter section
+        Row(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxWidth()) {
+            AccordionList(items = data)
+
+        }
+    }
 }
 @Composable
 fun TopRow_1(modifier: Modifier, name: String) {
