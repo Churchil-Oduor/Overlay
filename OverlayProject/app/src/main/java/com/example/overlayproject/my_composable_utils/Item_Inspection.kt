@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.overlayproject.R
 import com.example.overlayproject.ui.theme.mybackground_color
 
@@ -49,7 +50,7 @@ object InspectionDimens {
 
 
 @Composable
-fun InspectionPageUI(modifier:  Modifier = Modifier){
+fun ProductPageUI(modifier:  Modifier = Modifier, navController: NavController){
 
     Scaffold(containerColor = mybackground_color) {
         paddingValues ->
@@ -153,7 +154,7 @@ fun InspectionPageUI(modifier:  Modifier = Modifier){
 
                                   Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
                                       Button(
-                                          modifier = Modifier.padding(top = 20.dp).fillMaxWidth(),
+                                          modifier = Modifier.fillMaxWidth(),
                                           onClick = {},
                                           shape = RoundedCornerShape(InspectionDimens.rounded_shape),
                                           colors = ButtonColors(Color.Black,

@@ -32,6 +32,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,7 +52,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.overlayproject.R
 import com.example.overlayproject.data
 import com.example.overlayproject.ui.theme.mybackground_color
@@ -70,50 +75,72 @@ sealed class BottomNavItem(
 object CardDimensions {
     val Height = 500.dp
     val ImageHeight = 350.dp
-    val Width = 120.dp}
-
-
-
-
-
+    val Width = 120.dp
+}
 
 @Composable
-fun MainUI(modifier: Modifier= Modifier ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(start = 10.dp, end = 10.dp)) {
-        // first Quarter Row
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-        ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                //ROW1
-                // containing the Cart icon
-                TopRow_1(modifier = Modifier, "Churchil")
+fun HomeScreen(modifier: Modifier= Modifier, navController: NavController) {
 
-                //Row2
-                // containiing the Search Bar and the Scam Button
-                TopRow_2(modifier = Modifier)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = mybackground_color
+    ) {
 
-                //Row 3
-                TopRow_3(modifier = Modifier)
-                //ROW 4
-                //contains the horizontal list containing the tags
-                TopRow_4(modifier = Modifier)
-
+        val bottomnavController = rememberNavController()
+        Scaffold(
+            bottomBar = { BottomNavigationBar(navController = bottomnavController)},
+            containerColor = mybackground_color) {
+                innerPadding ->
+            NavHost(
+                navController = bottomnavController,
+                startDestination = BottomNavItem.Home.route,
+                modifier = Modifier
+            ) {
+                composable(BottomNavItem.Home.route) {  }
+                composable(BottomNavItem.Scan.route) {  }
+                composable(BottomNavItem.Cart.route) {  }
             }
-        }
 
-        //second 2-Quarter section
-        Row(
-            modifier = Modifier
-                .weight(2f)
-                .fillMaxWidth()) {
-            AccordionList(items = data)
+
+            Column(
+                modifier = Modifier.fillMaxSize().padding(start = 10.dp, end = 10.dp)) {
+                // first Quarter Row
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        //ROW1
+                        // containing the Cart icon
+                        TopRow_1(modifier = Modifier, "Basil")
+
+                        //Row2
+                        // containiing the Search Bar and the Scam Button
+                        TopRow_2(modifier = Modifier)
+
+                        //Row 3
+                        TopRow_3(modifier = Modifier)
+                        //ROW 4
+                        //contains the horizontal list containing the tags
+                        TopRow_4(modifier = Modifier)
+
+                    }
+                }
+
+                //second 2-Quarter section
+                Row(
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxWidth()) {
+                    AccordionList(items = data, navController = navController)
+
+                }
+            }
 
         }
     }
+
 }
 @Composable
 fun TopRow_1(modifier: Modifier, name: String) {
@@ -244,20 +271,20 @@ fun HorizontalListCardUI(item: String) {
 }
 
 @Composable
-fun AccordionList(items: Map<String, List<String>>) {
+fun AccordionList(items: Map<String, List<String>>, navController: NavController) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(16.dp)
         ) {
         items(items.entries.toList()) {(header, subItems) ->
-            AccordionItem(header = header, subItems = subItems)
+            AccordionItem(header = header, subItems = subItems, navController = navController)
         }
     }
 }
 
 
 @Composable
-fun AccordionItem(header: String, subItems: List<String>) {
+fun AccordionItem(header: String, subItems: List<String>, navController: NavController) {
     var isExpanded by remember {mutableStateOf(false)}
 
     Card(
@@ -277,7 +304,7 @@ fun AccordionItem(header: String, subItems: List<String>) {
                 contentDescription = "vase",
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .clickable(onClick = {})
+                    .clickable(onClick = {navController.navigate("product")})
                     .height(CardDimensions.ImageHeight),
                 contentScale = ContentScale.Crop
             )
