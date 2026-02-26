@@ -1,5 +1,6 @@
 package com.example.overlayproject.my_composable_utils
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.overlayproject.CameraActivity
 import com.example.overlayproject.R
 import com.example.overlayproject.ui.theme.mybackground_color
 
@@ -153,9 +156,14 @@ fun ProductPageUI(modifier:  Modifier = Modifier, navController: NavController){
 
 
                                   Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                                      val context = LocalContext.current
                                       Button(
                                           modifier = Modifier.fillMaxWidth(),
-                                          onClick = {},
+                                          onClick = {
+                                              val intent = Intent(context, CameraActivity::class.java)
+                                              context.startActivity(intent)
+
+                                          },
                                           shape = RoundedCornerShape(InspectionDimens.rounded_shape),
                                           colors = ButtonColors(Color.Black,
                                               contentColor = mybackground_color,

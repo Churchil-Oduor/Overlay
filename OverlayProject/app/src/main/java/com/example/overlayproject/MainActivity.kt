@@ -1,22 +1,20 @@
 package com.example.overlayproject
-import android.R
+
+
 import android.os.Bundle
-import android.window.SplashScreen
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.overlayproject.my_composable_utils.BottomNavItem
-import com.example.overlayproject.my_composable_utils.BottomNavigationBar
 import com.example.overlayproject.my_composable_utils.ProductPageUI
 import com.example.overlayproject.my_composable_utils.LaunchScreen
 import com.example.overlayproject.my_composable_utils.HomeScreen
@@ -28,7 +26,6 @@ val data = mapOf(
     "Veggies" to listOf("Carrot", "Broccoli", "Spinach", "Tomato"),
     "Drinks" to listOf("Water", "Juice", "Soda", "Tea", "Coffee")
 )
-
 
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +40,6 @@ class MainActivity : ComponentActivity() {
                     ) {
                       MyApp()
                 }
-
             }
         }
     }
@@ -60,29 +56,20 @@ fun MyApp() {
     ) {
         composable ("launchScreen"){
             LaunchScreen(navController = navController)
-
         }
-
         composable ("home"){
            HomeScreen(navController = navController)
         }
-
         composable ("product"){
-
             ProductPageUI(navController = navController)
-
         }
     }
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewOverlayUI() {
-
     OverlayProjectTheme {
-//        MainUi()
-      //  LaunchScreen()
+        //LaunchScreen()
     }
 }

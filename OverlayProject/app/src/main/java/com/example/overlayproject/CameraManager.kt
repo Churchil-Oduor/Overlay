@@ -2,7 +2,6 @@ package com.example.overlayproject
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
@@ -10,8 +9,6 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.YuvImage
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -23,23 +20,13 @@ import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 
 public class CameraManager(
+    private val activity: CameraActivity,
     private val baseContext: Context,
     private val viewBinding: ActivityCamera2Binding,
     private val cameraExecutor: ExecutorService,
     private val wsManager: WebSocketManager) {
-        private val REQUIRED_PERMISSIONS = mutableListOf (
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO
-        ).toTypedArray()
 
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-
-    private fun startCamera(){
+    fun startCamera(){
         val cameraProviderFuture = ProcessCameraProvider.getInstance(baseContext)
 
         cameraProviderFuture.addListener({
@@ -66,9 +53,9 @@ public class CameraManager(
                     wsManager.sendFrame(rotatedBytes)
 
 
-                    Log.d(TAG, "Frame Size: ${jpegBytes.size}")
+                    Log.d("TAG", "Frame Size: ${jpegBytes.size}")
                 } catch (e: Exception) {
-                    Log.e(TAG, "Frame Processing Error", e)
+                    Log.e("TAG", "Frame Processing Error", e)
                 } finally {
                     imageProxy.close()
                 }
@@ -79,15 +66,15 @@ public class CameraManager(
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
-                    baseContext,
+                    activity,
                     cameraSelector,
                     preview,
                     imageAnalyzer
                 )
             } catch (exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                Log.e("TAG", "Use case binding failed", exc)
             }
-        }, ContextCompat.getMainExecutor(this))
+        }, ContextCompat.getMainExecutor(baseContext))
     }
 
 
@@ -98,11 +85,6 @@ public class CameraManager(
     }
 
 
-    private fun requestPermissions() {
-        activityResultLauncher.launch(REQUIRED_PERMISSIONS)
-    }
-
- private val activityResultLauncher = registerForActivity
 
     //image conversion
     fun ImageProxy.toJpegByteArray(quality: Int = 80): ByteArray {
@@ -151,11 +133,4 @@ public class CameraManager(
         }
         return nv21
     }
-}
-
-
-
-
-
-
 }
