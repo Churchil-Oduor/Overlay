@@ -73,7 +73,7 @@ sealed class BottomNavItem(
 }
 
 object CardDimensions {
-    val Height = 500.dp
+    val Height = 390.dp
     val ImageHeight = 350.dp
     val Width = 120.dp
 }
@@ -103,7 +103,7 @@ fun HomeScreen(modifier: Modifier= Modifier, navController: NavController) {
 
 
             Column(
-                modifier = Modifier.fillMaxSize().padding(start = 10.dp, end = 10.dp)) {
+                modifier = Modifier.fillMaxSize().padding(start = 10.dp, end = 10.dp, top = 70.dp)) {
                 // first Quarter Row
                 Row(
                     modifier = Modifier
@@ -145,7 +145,7 @@ fun HomeScreen(modifier: Modifier= Modifier, navController: NavController) {
 @Composable
 fun TopRow_1(modifier: Modifier, name: String) {
 
-    Row(modifier = Modifier.padding(top = 40.dp)) {
+    Row(modifier = Modifier) {
 
         Column(
             modifier = Modifier.weight(1f),
@@ -179,7 +179,6 @@ fun TopRow_1(modifier: Modifier, name: String) {
                     .clickable(onClick = {}))
         }
     }
-
 }
 
 
@@ -218,7 +217,6 @@ fun TopRow_3(modifier: Modifier) {
             horizontalAlignment = Alignment.Start) {
             Text("Popular Designs", fontSize = 15.sp, fontWeight = FontWeight.Bold)
         }
-
         Column(modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.End) {
 
@@ -289,12 +287,12 @@ fun AccordionItem(header: String, subItems: List<String>, navController: NavCont
 
     Card(
         modifier = Modifier.fillMaxWidth()
+            .padding(bottom = 100.dp)
             .width(CardDimensions.Width).height(CardDimensions.Height),
         colors = CardDefaults.cardColors(
             containerColor = mybackground_color
         )
         ) {
-
         Column(modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
@@ -308,15 +306,12 @@ fun AccordionItem(header: String, subItems: List<String>, navController: NavCont
                     .height(CardDimensions.ImageHeight),
                 contentScale = ContentScale.Crop
             )
+
             Spacer(modifier = Modifier.height(8.dp))
             Text("helvetican Vase", fontWeight = FontWeight.Normal)
-
         }
-
     }
 }
-
-
 
 
 
@@ -351,8 +346,6 @@ fun BottomNavigationBar(navController: NavController) {
                     }
                 },
                 icon = {
-
-
                     Icon(imageVector = item.icon, contentDescription = item.label)
                 },
                 label = {Text(item.label)},
@@ -362,7 +355,5 @@ fun BottomNavigationBar(navController: NavController) {
                 )
             )
         }
-        
     }
-
 }

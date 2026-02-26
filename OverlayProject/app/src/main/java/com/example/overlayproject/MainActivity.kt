@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
@@ -69,7 +68,8 @@ fun MyApp() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewOverlayUI() {
+    val navController = rememberNavController()
     OverlayProjectTheme {
-        //LaunchScreen()
+        HomeScreen(navController = navController)
     }
 }
