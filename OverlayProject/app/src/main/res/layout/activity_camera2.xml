@@ -16,10 +16,24 @@
             android:id="@+id/viewFinder"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+
         <SurfaceView
             android:id="@+id/surface_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/back_arrow"
+            android:background="@drawable/circular_button_bg"
+            android:contentDescription="Action Button"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:scaleType="fitCenter"/>
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

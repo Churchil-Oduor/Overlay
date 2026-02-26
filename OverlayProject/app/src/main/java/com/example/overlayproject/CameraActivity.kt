@@ -11,8 +11,11 @@ import com.google.android.filament.utils.Utils
 import com.google.ar.core.CameraIntrinsics
 import java.util.concurrent.ExecutorService
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -30,7 +33,7 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var modelViewer: ModelViewer
     private lateinit var preview: PreviewView
     private lateinit var cameraManager: CameraManager
-
+    private lateinit var backBtn: ImageButton
     @Volatile
     private var latestPoseMatrix: FloatArray? = null
 
@@ -48,7 +51,11 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityCamera2Binding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        backBtn = findViewById<ImageButton>(R.id.back_button)
 
+        backBtn.setOnClickListener {
+            finish()
+        }
 
         surfaceView = findViewById(R.id.surface_view)
         preview = findViewById(R.id.viewFinder)
